@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.titre }}{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .show-wrapper {
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: white;
+        }
+        p {
+            font-size: 1.2em;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .article-details {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #333;
+        }
+        .article-details p {
+            margin: 10px 0;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            border: none;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .btn-delete {
+            background-color: #e74c3c;
+        }
+        .btn-delete:hover {
+            background-color: #c0392b;
+        }
+    </style>
+    <div class="show-wrapper">
+        <div class="article-details">
+            <h1>{{ article.titre }}</h1>
+            <p>{{ article.texte }}</p>
+            <p>Publié le: {{ article.date|date('d/m/Y H:i') }}</p>
+            <a href="{{ path('edit_article', {'id': article.id}) }}" class="btn">Modifier</a>
+            <a href="{{ path('delete_article', {'id': article.id}) }}" class="btn btn-delete">Supprimer</a>
+        </div>
+    </div>
+{% endblock %}
