@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+    <h1>Admin Dashboard</h1>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_admin_test1') }}">Admin Test 1</a>
+    {% endif %}
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <a href="{{ path('app_admin_test2') }}">Super Admin Test 2</a>
+    {% endif %}
+{% endblock %}

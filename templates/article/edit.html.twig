@@ -3,44 +3,6 @@
 {% block title %}Edit Article{% endblock %}
 
 {% block body %}
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-        .edit-wrapper {
-            padding: 20px;
-        }
-        .form-control, .form-check-input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #333;
-            border-radius: 5px;
-        }
-        .form-control:focus, .form-check-input:focus {
-            border-color: #3498db;
-            outline: none;
-        }
-        .form-label {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #3498db;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: background-color 0.3s;
-            border: none;
-        }
-        .btn:hover {
-            background-color: #2980b9;
-        }
-    </style>
     <div class="edit-wrapper">
         <h1>Edit Article</h1>
         {{ form_start(form) }}

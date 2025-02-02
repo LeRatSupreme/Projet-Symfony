@@ -3,58 +3,7 @@
 {% block title %}Liste des Articles{% endblock %}
 
 {% block body %}
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-        .example-wrapper {
-            padding: 20px;
-        }
-        .article-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 18px;
-            text-align: left;
-            background-color: #1e1e1e;
-            color: #e0e0e0;
-        }
-        .article-table th, .article-table td {
-            padding: 12px 15px;
-            border: 1px solid #333;
-        }
-        .article-table th {
-            background-color: #333;
-        }
-        .article-table tr:nth-child(even) {
-            background-color: #2a2a2a;
-        }
-        .article-table tr:hover {
-            background-color: #333;
-        }
-        .article-table a {
-            color: #3498db;
-            text-decoration: none;
-        }
-        .article-table a:hover {
-            text-decoration: underline;
-        }
-        .new-article-button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #3498db;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-        .new-article-button:hover {
-            background-color: #2980b9;
-        }
-    </style>
-    <div class="example-wrapper">
+    <div class="article-wrapper">
         <h1>Liste des Articles</h1>
         <table class="article-table">
             <thead>
@@ -62,6 +11,7 @@
                 <th>ID</th>
                 <th>Titre</th>
                 <th>Date</th>
+                <th>Publier</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -71,6 +21,13 @@
                     <td>{{ article.id }}</td>
                     <td>{{ article.titre }}</td>
                     <td>{{ article.date|date('d/m/Y H:i') }}</td>
+                    <td>
+                        {% if article.publie %}
+                            <span class="icon-small">{{ ux_icon('grommet-icons:validate') }}</span>
+                        {% else %}
+                            <span class="icon-small">{{ ux_icon('emojione-monotone:cross-mark') }}</span>
+                        {% endif %}
+                    </td>
                     <td>
                         <a href="{{ path('show_article', {id: article.id}) }}">Voir</a>
                     </td>

@@ -1,56 +1,28 @@
 <style>
-    @import url(https://fonts.googleapis.com/css?family=Poppins:200,400,500,600,700);
-    .header {
-        background-color: #f1f1f1;
-        padding: 20px;
-        display: flex;
-        align-items: center;
-    }
-    .nav {
-        background-color: #F5F5F5;
-    }
-    .li-nav {
-        display: inline-block;
-        margin-right: 30px;
-        position: relative;
-    }
-    li a {
-        text-decoration: none;
-        color: inherit;
-        font-size: 20px;
-        font-weight: bold;
-        font-family: "Poppins";
-    }
-    li a:hover {
-        color: #d1d1d1;
-    }
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-        left: 0;
-    }
-    .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
-    .dropdown-content a:hover {
-        background-color: #f1f1f1;
-    }
-    .li-nav:hover .dropdown-content {
-        display: block;
-    }
+
 </style>
 
 <header class="header">
     <nav class="nav">
         <ul>
-            <li class="li-nav"><a href="{{ path('app_homedefault') }}">MySymfonyApp</a></li>
+            <li class="li-nav"><a href="{{ path('app_homedefault') }}">RatusApp</a></li>
+            {% if app.user %}
+                <li class="li-nav dropdown">
+                    <a href="#" class="dropbtn">Authentication</a>
+                    <div class="dropdown-content">
+                        <a href="#" class="dropbtn">{{ app.user.email }}</a>
+                        <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                </li>
+            {% else %}
+                <li class="li-nav dropdown">
+                    <a href="#" class="dropbtn">Authentication</a>
+                    <div class="dropdown-content">
+                        <a href="{{ path('app_register') }}">Register</a>
+                        <a href="{{ path('app_login') }}">Login</a>
+                    </div>
+                </li>
+            {% endif %}
             <li class="li-nav"><a href="{{ path('app_lucky') }}">Lucky</a></li>
             <li class="li-nav"><a href="{{ path('app_about') }}">About</a></li>
             <li class="li-nav">
@@ -59,6 +31,18 @@
                     <a href="{{ path('list_articles') }}">All Articles</a>
                 </div>
             </li>
+            {% if app.user and not 'ROLE_USER' not in app.user.roles %}
+                <li class="li-nav dropdown">
+                    <a href="{{ path('admin_user_list') }}" class="dropbtn">Admin panel</a>
+                    <div class="dropdown-content">
+                        <a href="{{ path('admin_user_list') }}">Manage Users</a>
+                        <a href="{{ path('admin_user_roles', {id: app.user.id}) }}">Manage Roles</a>
+                        <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                </li>
+            {% else %}
+               
+            {% endif %}
         </ul>
     </nav>
 </header>

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>User List</h1>
+    <table class="article-table">
+        <thead>
+        <tr>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles|join(', ') }}</td>
+                <td>
+                    <form action="{{ path('admin_user_delete_confirm', {id: user.id}) }}" method="get" style="display:inline;">
+                        <button type="submit" class="btn btn-delete">Delete</button>
+                    </form>
+                    <form action="{{ path('admin_user_roles', {id: user.id}) }}" method="get" style="display:inline;">
+                        <button type="submit" class="btn">Manage Roles</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

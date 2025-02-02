@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
+use App\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,14 +47,30 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/article/show/{id}', name: 'show_article')]
-    public function showArticle(int $id, EntityManagerInterface $entityManager): Response
+    public function showArticle(int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
         $article = $entityManager->getRepository(Article::class)->find($id);
         if (!$article) {
             throw $this->createNotFoundException('The article does not exist');
         }
+        $this->addFlash('success', 'Article bien chargé');
+        $comment = new Comment();
+        $comment->setArticle($article);
+        $comment->setCreatedAt(new \DateTime());
+
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($comment);
+            $entityManager->flush();
+            return $this->redirectToRoute('show_article', ['id' => $article->getId()]);
+        }
+
         return $this->render('article/show.html.twig', [
             'article' => $article,
+            'comments' => $article->getComments(),
+            'comment_form' => $form->createView(),
         ]);
     }
 
@@ -60,6 +78,7 @@ class ArticleController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $article = new Article();
+        $article->setPublie(false);
         $form = $this->createForm(ArticleType::class, $article);
 
         $form->handleRequest($request);

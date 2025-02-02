@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="roles-wrapper">
+        <h1 class="page-title">Gérer les rôles de l'utilisateur</h1>
+        <p class="user-email">Email: {{ user.email }}</p>
+        <div class="form-container">
+            {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_label(form.roles, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.roles, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
