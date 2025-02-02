@@ -25,23 +25,24 @@
             {% endif %}
             <li class="li-nav"><a href="{{ path('app_lucky') }}">Lucky</a></li>
             <li class="li-nav"><a href="{{ path('app_about') }}">About</a></li>
-            <li class="li-nav">
-                <a href="{{ path('app_article') }}">Articles</a>
+            <li class="li-nav dropdown">
+                <a href="#" class="dropbtn">Articles</a>
                 <div class="dropdown-content">
-                    <a href="{{ path('list_articles') }}">All Articles</a>
+                    <a href="{{ path('list_articles') }}">List Articles</a>
+                    <a href="{{ path('article_new') }}">New Article</a>
+                    <a href="{{ path('generate_article') }}">Generate Random Article</a>
                 </div>
             </li>
             {% if app.user and not 'ROLE_USER' not in app.user.roles %}
                 <li class="li-nav dropdown">
-                    <a href="{{ path('admin_user_list') }}" class="dropbtn">Admin panel</a>
+                    <a href="#" class="dropbtn">Admin Panel</a>
                     <div class="dropdown-content">
                         <a href="{{ path('admin_user_list') }}">Manage Users</a>
-                        <a href="{{ path('admin_user_roles', {id: app.user.id}) }}">Manage Roles</a>
-                        <a href="{{ path('app_logout') }}">Logout</a>
+
                     </div>
                 </li>
             {% else %}
-               
+
             {% endif %}
         </ul>
     </nav>

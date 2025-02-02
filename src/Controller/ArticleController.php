@@ -74,18 +74,19 @@ class ArticleController extends AbstractController
         ]);
     }
 
+
     #[Route('/article/new', name: 'article_new')]
+    #[IsGranted('ROLE_USER')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $article = new Article();
-        $article->setPublie(false);
         $form = $this->createForm(ArticleType::class, $article);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($article);
             $entityManager->flush();
-            return $this->redirectToRoute('show_article', ['id' => $article->getId()]);
+            return $this->redirectToRoute('list_articles');
         }
 
         return $this->render('article/new.html.twig', [
@@ -114,7 +115,9 @@ class ArticleController extends AbstractController
         ]);
     }
 
+
     #[Route('/article/delete/{id}', name: 'delete_article')]
+    #[IsGranted('ROLE_ARTICLE_ADMIN')]
     public function delete(int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
         $article = $entityManager->getRepository(Article::class)->find($id);
